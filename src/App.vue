@@ -1,5 +1,5 @@
 <template>
-  <PmState 
+  <PmState amnfdiadsn
     :state="gState.model" 
     :key="gState.key" />
 </template>
