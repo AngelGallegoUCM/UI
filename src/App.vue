@@ -8,7 +8,11 @@
   import PmState from './components/PmState.vue'
   import { gState } from './state.js'
 
+<<<<<<< HEAD
   //                da acceso al modelo desde la consola - M.model = modelo
+=======
+  //                       da acceso al modelo desde la consola - M.model = modelo
+>>>>>>> 59d0db7d6eec983e40e15133faa625cc553bf280
   window.M = gState
 </script>
 
