@@ -17,7 +17,7 @@
         <div v-for="slot in slots" :key="slot.id" 
             :id="`${bodyId}${slot.id}`" 
             :class="slot.semester == 'FALL' ? 'ttb c1' : 'ttb c2'" 
-            :title="JSON.stringify(slot)"
+            :title="getSubjectInfo(slot.groupId, slot.location)"
             :data-slot="slot">
             <span>{{ formatNiceGroup(slot.groupId) }}</span>
         </div>
@@ -40,6 +40,12 @@ const formatNiceGroup = groupId => {
   const group = gState.resolve(groupId);
   const subject = gState.resolve(group.subjectId);
   return `${subject.short}:${group.name}`
+}
+
+const getSubjectInfo = (groupId, location) => {
+  const group = gState.resolve(groupId);
+  const subject = gState.resolve(group.subjectId);
+  return `Nombre: ${subject.name}, Créditos: ${subject.credits}, Aula: ${location}`;
 }
 
 const openingTime = 800

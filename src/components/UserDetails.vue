@@ -5,7 +5,7 @@
         <tbody>
             <tr>
                 <th>Rol</th>
-                <td>{{ user.userRole }} </td>
+                <td>{{ user.userRole }}</td>
             </tr>
             <tr>
                 <th>Créditos</th>
@@ -16,25 +16,25 @@
                 <td v-if="user.groups.length">
                     {{ user.groups.map(g => formatNiceGroup(g)).join(' ') }}
                 </td>
-                <td v-else> (ninguno) </td>
+                <td v-else>(ninguno)</td>
             </tr>
         </tbody>
     </table>
-    
+
+    <h3>Horario 1er Cuatrimestre</h3>
     <SortableGrid :data="addSlotCols(FallSlots)" :columns="slotColumns" 
       :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
     <TimeTable :slots="FallSlots" />
 
+    <h3>Horario 2º Cuatrimestre</h3>
     <SortableGrid :data="addSlotCols(SpringSlots)" :columns="slotColumns" 
       :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
     <TimeTable :slots="SpringSlots" />
 
-
-
     <h5>Acciones</h5>
     <div class="btn-group">
-        <button @click="$emit('editUser')" class="btn btn-outline-success">✏️</button>
-        <button @click="$emit('rmUser')" class="btn btn-outline-danger">🗑️</button>
+        <button @click="$emit('editUser')" class="btn btn-outline-success" title="Editar usuario">✏️</button>
+        <button @click="$emit('rmUser')" class="btn btn-outline-danger" title="Eliminar usuario">🗑️</button>
     </div>
 </template>
 
@@ -43,29 +43,29 @@ import SortableGrid from './SortableGrid.vue';
 import TimeTable from './TimeTable.vue';
 
 import { gState, semesterNames, weekDayNames } from '../state.js';
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
 defineEmits([
   'filterUser',
   'editUser',
-  'rmUser',
-])
+  'rmUser'
+]);
 
 const props = defineProps({
     user: Object // see definition of User in ../model.js
-})
+});
 
-let sorter = ref([{key: "weekDay", order: 1}])
+let sorter = ref([{ key: "weekDay", order: 1 }]);
 
-const slots = computed(() => slotsOfAllGroups(props.user.groups))
+const slots = computed(() => slotsOfAllGroups(props.user.groups));
 
 const FallSlots = computed(() => {
-    return slots.value.filter(slot => slot.semester === 'FALL')
-})
+    return slots.value.filter(slot => slot.semester === 'FALL');
+});
 
 const SpringSlots = computed(() => {
-    return slots.value.filter(slot => slot.semester === 'SPRING')
-})
+    return slots.value.filter(slot => slot.semester === 'SPRING');
+});
 
 const slotsOfAllGroups = (gg) => {
     const rv = [];
@@ -75,7 +75,7 @@ const slotsOfAllGroups = (gg) => {
         }
     }
     return rv;
-}
+};
 
 const slotColumns = [
     { key: 'niceGroup', display: 'Grupo', type: 'String' },
@@ -91,25 +91,44 @@ const slotColumns = [
     },
     { key: 'niceStart', display: 'Inicio', type: 'Time' },
     { key: 'niceEnd', display: 'Final', type: 'Time' },
-    { key: 'location', display: 'Lugar', type: 'String' },
-]
+    { key: 'location', display: 'Lugar', type: 'String' }
+];
 
 const addSlotCols = (ss) => {
     for (let s of ss) {
-        s.niceGroup = formatNiceGroup(s.groupId)
-        s.niceStart = formatTime(s.startTime)
-        s.niceEnd = formatTime(s.endTime)
+        s.niceGroup = formatNiceGroup(s.groupId);
+        s.niceStart = formatTime(s.startTime);
+        s.niceEnd = formatTime(s.endTime);
     }
     return ss;
-}
+};
 
 // 1450 => "14:50"
-const formatTime = t => `${Math.floor(t / 100)}:` + `0${t % 100}`.slice(-2)
+const formatTime = t => `${Math.floor(t / 100)}:` + `0${t % 100}`.slice(-2);
 
 const formatNiceGroup = groupId => {
     const group = gState.resolve(groupId);
     const subject = gState.resolve(group.subjectId);
-    return `${subject.short}:${group.name}`
+    return `${subject.short}:${group.name}`;
+};
+</script>
+
+<style scoped>
+/* Añadir espacio entre las filas de la tabla */
+table tbody tr {
+  margin-bottom: 15px;
 }
 
-</script>
+/* Añadir espacio antes y después de los títulos */
+h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Añadir espacio entre las filas y columnas */
+.details-table th,
+.details-table td {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+</style>

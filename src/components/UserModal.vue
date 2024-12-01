@@ -33,6 +33,7 @@
 import BaseModal from './BaseModal.vue';
 import MemberBox from './MemberBox.vue'
 import TextBox from './TextBox.vue'
+import SubjectBox from './SubjectBox.vue'
 
 import { gState } from '../state.js';
 import { ref } from 'vue'
