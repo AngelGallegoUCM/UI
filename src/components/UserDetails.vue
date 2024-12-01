@@ -9,7 +9,7 @@
             </tr>
             <tr>
                 <th>Créditos</th>
-                <td>imparte {{ user.assignedCredits }} de {{ user.maxCredits }}</td>
+                <td>Imparte {{ user.assignedCredits }} de {{ user.maxCredits }}</td>
             </tr>
             <tr>
                 <th>Grupos a los que da clase</th>
@@ -20,10 +20,16 @@
             </tr>
         </tbody>
     </table>
-
-    <SortableGrid :data="addSlotCols(slots)" :columns="slotColumns" 
+    
+    <SortableGrid :data="addSlotCols(FallSlots)" :columns="slotColumns" 
       :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
-    <TimeTable :slots="slots" />
+    <TimeTable :slots="FallSlots" />
+
+    <SortableGrid :data="addSlotCols(SpringSlots)" :columns="slotColumns" 
+      :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
+    <TimeTable :slots="SpringSlots" />
+
+
 
     <h5>Acciones</h5>
     <div class="btn-group">
@@ -52,6 +58,14 @@ const props = defineProps({
 let sorter = ref([{key: "weekDay", order: 1}])
 
 const slots = computed(() => slotsOfAllGroups(props.user.groups))
+
+const FallSlots = computed(() => {
+    return slots.value.filter(slot => slot.semester === 'FALL')
+})
+
+const SpringSlots = computed(() => {
+    return slots.value.filter(slot => slot.semester === 'SPRING')
+})
 
 const slotsOfAllGroups = (gg) => {
     const rv = [];

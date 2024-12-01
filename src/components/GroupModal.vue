@@ -11,13 +11,13 @@
         <div class="container">
           <TextBox :start="group.name" id="e-name" label="Name"
             @change="(v) => name = gState.resolve(group.subjectId).short + ':' + v" />
-          <SelectBox :all="gState.model.getSubjects()" 
+          <DropDownAS :all="gState.model.getSubjects()" 
             :start="group.subjectId" :displayCol="'short'" id="e-subjectId"
             label="Asignatura" />
           <br>
           <TextBox :start="'' + group.credits" id="e-credits" label="Créditos" />
-          <TextBox :start="'' + group.isLab" id="e-isLab" label="Prácticas" />
-          <SelectBox 
+          <DropDownPracticas :start="'' + group.isLab" id="e-isLab" label="Prácticas" />
+          <DropDownAS 
             :all="gState.model.getUsers({ userRole: gState.model.UserRole.TEACHER })" 
             :start="group.teacherId"
             :displayCol="'userName'" id="e-teacherId" label="Profesor" />
@@ -42,8 +42,10 @@
 
 import BaseModal from './BaseModal.vue';
 import TextBox from './TextBox.vue'
-import SelectBox from './SelectBox.vue'
+import DropDownPracticas from './DropDownPracticas.vue'
 import SlotBox from './SlotBox.vue'
+
+import DropDownAS from './DropDownAS.vue'
 
 import { gState } from '../state.js';
 import { ref } from 'vue'
@@ -110,7 +112,7 @@ function setGroup() {
   // todo válido: lanza evento a padre, y cierra modal
   emit(props.isAdd ? 'add' : 'edit', new gState.model.Group(group.id,
     valueFor("e-name"),
-    valueFor("e-subjectId") ? +valueFor("e-subjectId") : undefined,
+    form.querySelector(`select[name=e-subjectId]`).value,
     +valueFor("e-credits"),
     valueFor("e-isLab") === "true",
     slots.map(o => o.id),
