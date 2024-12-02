@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <tr v-for="entry in filteredData" :key="entry.id" 
-        @click="handleSelect(entry.id)">
+      @click="handleSelect(entry.id)">
 
         <td v-for="(col, index) in columns" :key="`${entry.id}_${col.key}`"
           class="text-start">
@@ -48,7 +48,7 @@
       </tr>
     </tbody>
   </table>
-  <p v-else>(no hay nada que mostrar)</p>
+  <p v-else>(No hay nada que mostrar)</p>
 </template>
 
 <script setup>
@@ -66,15 +66,7 @@
     columns: Array,    // [{key: colName, display:, type: String|Number|ObjectIds|Enum, } ...]
   })
   
-  const emit = defineEmits(['selectOne']);
-
-  function handleSelect(id) {
-  emit('selectOne', id);
-  const detailsSection = document.getElementById("div-details");
-  if (detailsSection) {
-    detailsSection.scrollIntoView({ behavior: "smooth" });
-  }
-}
+  defineEmits(['selectOne'])
 
   /**
    * Column objects:

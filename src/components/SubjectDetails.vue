@@ -50,3 +50,17 @@
   })
   
   </script>
+
+<style scoped>
+
+h4{ /* Cabecera con la asignatura*/
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+h5 { /* Cabecera con las accciones */
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+</style>
