@@ -66,7 +66,15 @@
     columns: Array,    // [{key: colName, display:, type: String|Number|ObjectIds|Enum, } ...]
   })
   
-  defineEmits(['selectOne'])
+  const emit = defineEmits(['selectOne']);
+
+  function handleSelect(id) {
+    emit('selectOne', id);    // para notificar al componente padre sobre el elemento seleccionado.
+    const detailsSection = document.getElementById("div-details");
+    if (detailsSection) {     // para localizar la sección de detalles (div-details) y desplazar la vista 
+      detailsSection.scrollIntoView({ behavior: "smooth" }); 
+    }
+}
 
   /**
    * Column objects:
