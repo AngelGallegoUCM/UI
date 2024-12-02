@@ -15,13 +15,14 @@
             <tr>
                 <th>Grupos a los que da clase</th>
                 <td v-if="user.groups.length">
-                    {{ user.groups.map(g => formatNiceGroup(g)).join(' ') }}
+                   <!--{{ user.groups.map(g => formatNiceGroup(g)).join(' ') }}      he cambiado este por un for-->
                     <span 
-            v-for="group in user.groups" 
-            :key="group"
-            class="badge bg-primary me-1">
-                {{ formatNiceGroup(group) }}
-        </span>
+                        v-for="group in user.groups" 
+                        :key="group"
+                        class="badge me-1"
+                        :style="{ backgroundColor: ' #1f76aa ', color: 'white' }">
+                        {{ formatNiceGroup(group) }}
+                    </span>
                 </td>
                 <td v-else>(ninguno)</td>
             </tr>

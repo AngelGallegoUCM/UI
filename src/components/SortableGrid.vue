@@ -28,7 +28,8 @@
           </template>
           <template v-else-if="col.type == 'ObjectIds'">
             <span v-for="o in entry[col.key].map(v => gState.resolve(v))" :key="o.id"
-              class="badge bg-info text-dark me-1"
+              class="badge me-1"
+              :style="{ backgroundColor: ' #1f76aa ', color: 'white' }"
               :data-bs-toggle="col.title ? 'tooltip' : null" 
               :data-bs-html="col.title ? true : null"
               :data-bs-title="col.title ? col.title(entry, col.key, o) : null">
