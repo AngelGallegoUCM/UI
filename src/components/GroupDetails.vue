@@ -20,11 +20,12 @@
         <td v-if="teacher">
           {{ teacher.userName }} ({{ teacher.firstName }} {{ teacher.lastName}})
         </td>
-        <td v-else> (ninguno) </td>
+        <td v-else> (Ninguno) </td>
       </tr>
     </tbody>
   </table>
 
+  <h3>Horario</h3>
   <SortableGrid :data="addSlotCols(slots)" :columns="slotColumns" 
     :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
   <TimeTable :slots="slots" />
@@ -87,6 +88,21 @@ const formatTime = t => `${Math.floor(t / 100)}:` + `0${t % 100}`.slice(-2)
 .dayOfWeek {
   display: inline-block;
   width: 4em;
+}
+
+h4{ /* Cabecera con el grupo */
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+h5 { /* Cabecera con las accciones */
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+/* Añadir espacio antes y después de los títulos */
+h3 {
+  margin-top: 20px;
 }
 
 .slot {

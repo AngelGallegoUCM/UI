@@ -24,7 +24,7 @@
                         {{ formatNiceGroup(group) }}
                     </span>
                 </td>
-                <td v-else>(ninguno)</td>
+                <td v-else>(Ninguno)</td>
             </tr>
         </tbody>
     </table>
@@ -123,10 +123,19 @@ const formatNiceGroup = groupId => {
 
 <style scoped>
 
+h4{ /* Cabecera con el grupo */
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+h5 { /* Cabecera con las accciones */
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
 /* Añadir espacio antes y después de los títulos */
 h3 {
   margin-top: 20px;
-  margin-bottom: 10px;
 }
 
 </style>

@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <tr v-for="entry in filteredData" :key="entry.id" 
-        @click="handleSelect(entry.id)">
+      @click="handleSelect(entry.id)">
 
         <td v-for="(col, index) in columns" :key="`${entry.id}_${col.key}`"
           class="text-start">
@@ -49,7 +49,7 @@
       </tr>
     </tbody>
   </table>
-  <p v-else>(no hay nada que mostrar)</p>
+  <p v-else>(No hay nada que mostrar)</p>
 </template>
 
 <script setup>

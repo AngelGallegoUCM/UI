@@ -58,3 +58,17 @@ const addSlotCols = (ss) => {
 const formatTime = t => `${Math.floor(t / 100)}:` + `0${t % 100}`.slice(-2)
 
 </script>
+
+<style scoped>
+
+h4{ /* Cabecera con el lugar*/
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+h5 { /* Cabecera con las accciones */
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+</style>
