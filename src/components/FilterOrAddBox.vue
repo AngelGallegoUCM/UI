@@ -38,7 +38,7 @@
 <script setup>
 import { ref, useId } from 'vue'
 
-// eslint generates (bogus) error unless prevented from doing so with this comment:
+// eslint generates (bogus) error unless prevented from doing so with this comment :
 // eslint-disable-next-line
 const filter = defineModel('filter') // {all: '', fields: {keyCol1: '', ...}}
 
