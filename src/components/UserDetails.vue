@@ -5,7 +5,8 @@
         <tbody>
             <tr>
                 <th>Rol</th>
-                <td>{{ user.userRole }}</td>
+                <td v-if="user.userRole === 'teacher'">Profesor</td>
+                <td v-else>Administrador</td>
             </tr>
             <tr>
                 <th>Créditos</th>
@@ -114,10 +115,6 @@ const formatNiceGroup = groupId => {
 </script>
 
 <style scoped>
-/* Añadir espacio entre las filas de la tabla */
-table tbody tr {
-  margin-bottom: 15px;
-}
 
 /* Añadir espacio antes y después de los títulos */
 h3 {
@@ -125,10 +122,4 @@ h3 {
   margin-bottom: 10px;
 }
 
-/* Añadir espacio entre las filas y columnas */
-.details-table th,
-.details-table td {
-  padding: 8px 12px;
-  margin-bottom: 10px;
-}
 </style>

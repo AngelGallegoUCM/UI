@@ -6,7 +6,7 @@
         <form id="addOrEditSubjectForm" 
           @submit.prevent="e => setSubject()">
           <div class="container">
-            <TextBox :start="subject.name" id="e-name" label="Name"  
+            <TextBox :start="subject.name" id="e-name" label="Nombre"  
               @change="(v) => name=v"/>
             <TextBox :start="subject.short" id="e-short" label="Acrónimo" />
             <br>

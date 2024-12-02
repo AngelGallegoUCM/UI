@@ -9,7 +9,7 @@
     <template #body>
       <form id="addOrEditGroupForm" @submit.prevent="e => setGroup()">
         <div class="container">
-          <TextBox :start="group.name" id="e-name" label="Name"
+          <TextBox :start="group.name" id="e-name" label="Nombre"
             @change="(v) => name = gState.resolve(group.subjectId).short + ':' + v" />
           <DropDownAS :all="gState.model.getSubjects()" 
             :start="group.subjectId" :displayCol="'short'" id="e-subjectId"
@@ -24,7 +24,7 @@
           <br>
           <SlotBox 
             :start="group.slots"
-            id="e-slots" label="Slots" />
+            id="e-slots" label="Franja horaria" />
         </div>
         <button type="submit" class="invisible">Submit</button>
       </form>

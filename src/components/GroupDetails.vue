@@ -12,7 +12,8 @@
       </tr>
       <tr>
         <th>Cuatrimestre</th>
-        <td>{{ subject.semester }}</td>
+        <td v-if="subject.semester === 'FALL'">Otoño</td>
+        <td v-else>Primavera</td>
       </tr>
       <tr>
         <th>Profesor</th>

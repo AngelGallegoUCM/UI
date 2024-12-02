@@ -148,6 +148,9 @@
 th.ghead {
   white-space: nowrap;
 }
+th, td { /* se añade espacio entre las columnas */
+  padding-left: 15px;
+}
 .arrow.asc::after {
   content: "↓";
   position: relative;
@@ -166,7 +169,6 @@ span.small {
 }
 table {
   margin-top: 10px;
-
 }
 thead>tr {
   border-bottom: 1px solid gray;
