@@ -6,13 +6,13 @@
         <form id="addOrEditSubjectForm" 
           @submit.prevent="e => setSubject()">
           <div class="container">
-            <TextBox :start="subject.name" id="e-name" label="Name"  
+            <TextBox :start="subject.name" id="e-name" label="Nombre"  
               @change="(v) => name=v"/>
             <TextBox :start="subject.short" id="e-short" label="Acrónimo" />
             <br>
             <TextBox :start="subject.degree" id="e-degree" label="Grados"/>
             <TextBox :start="subject.codes" id="e-codes" label="Códigos GEA"/>
-            <TextBox :start="subject.semester" id="e-semester" label="Cuatrimestre" />
+            <DropDown :start="subject.semester" id="e-semester" label="Cuatrimestre" />
             <TextBox :start="''+subject.credits" id="e-credits" label="Créditos" />
             <br>
           </div>
@@ -32,6 +32,7 @@
 
 import BaseModal from './BaseModal.vue';
 import TextBox from './TextBox.vue'
+import DropDown from './DropDown.vue'
 
 import { gState } from '../state.js';
 import { ref } from 'vue'
@@ -71,7 +72,7 @@ function setSubject() {
     valueFor("e-short"), 
     valueFor("e-degree"), 
     +valueFor("e-credits"),
-    valueFor("e-semester"),
+    form.querySelector(`select[name=e-semester]`).value,
     valueFor("e-codes"),
     subject.groups,
   ))

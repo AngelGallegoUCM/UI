@@ -1,9 +1,3 @@
-<!--
-    Muestra un filtro de la forma {all: '', fields: {}} y un botón de añadir elemento
-    El filtro tiene dos modos: normal y por campos, y es posible cambiar entre estos modos.
-    - modo normal deja fields: a {}
-    - modo avanzado deja all: a ''
--->
 <template>
   <div class="row">
     <div class="col-auto w-75">
@@ -18,7 +12,7 @@
       </div>
     </div>
     <div class="col-auto">
-
+      <button type="button" title="Eliminar elementos filtrados" @click="removeFilteredElements" class="btn btn-outline-danger">🗑️</button>
     </div>
     <div v-if="addBtnTitle" class="col-auto">
       <button type="button" :title="addBtnTitle" @click="$emit('addElement')" class="btn btn-outline-primary">➕</button>
@@ -44,7 +38,7 @@
 <script setup>
 import { ref, useId } from 'vue'
 
-// eslint generates (bogus) error unless prevented from doing so with this comment:
+// eslint generates (bogus) error unless prevented from doing so with this comment :
 // eslint-disable-next-line
 const filter = defineModel('filter') // {all: '', fields: {keyCol1: '', ...}}
 
@@ -60,7 +54,7 @@ const advSearch = ref(filter.value.fields.length > 0)
 const id = useId()
 
 function updateValue(key) {
-  const prev = {... filter.value.fields};
+  const prev = {...filter.value.fields};
   prev[key] = document.getElementById(`${id}_${key}`).value
   filter.value = {all: '', fields: prev}
 }
@@ -73,6 +67,12 @@ function toggleAdvanced() {
   } else {
     filter.value.fields = {}
   }
+}
+
+// Función para eliminar los elementos filtrados
+function removeFilteredElements() {
+  // Emitir evento para eliminar elementos filtrados
+  filter.value = {all: '', fields: {}};
 }
 
 </script>

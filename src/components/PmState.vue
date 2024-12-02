@@ -34,9 +34,9 @@
         </ul>
         <div class="nav-item ms-auto">
           <div class="btn-group">
-            <button id="save" class="btn btn-outline-secondary">💾</button>
-            <button id="clean" class="btn btn-outline-secondary">🧽</button>
-            <button id="restore" class="btn btn-outline-secondary">↩️</button>
+            <button id="save" class="btn btn-outline-secondary" title = "Guardar">💾</button>
+            <button id="clean" class="btn btn-outline-secondary" title = "Limpiar">🧽</button>
+            <button id="restore" class="btn btn-outline-secondary" title = "Rehacer">↩️</button>
           </div>
         </div>
       </div>
@@ -175,9 +175,9 @@ const debug = false;
 
 // para vista de usuarios; ver doc. en SortableGrid
 const userColumns = [
-  { key: 'userName', display: 'Login', type: 'String' },
-  { key: 'firstName', display: 'First name', type: 'String' },
-  { key: 'lastName', display: 'Last name', type: 'String' },
+  { key: 'userName', display: 'Usuario', type: 'String' },
+  { key: 'firstName', display: 'Nombre', type: 'String' },
+  { key: 'lastName', display: 'Apellidos', type: 'String' },
   { key: 'maxCredits', display: 'Totales', type: 'Number' },
   { key: 'assignedCredits', display: 'Imparte', type: 'Number' },
   { 

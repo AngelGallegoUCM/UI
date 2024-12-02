@@ -12,7 +12,8 @@
       </tr>
       <tr>
         <th>Cuatrimestre</th>
-        <td>{{ subject.semester }}</td>
+        <td v-if="subject.semester === 'FALL'">Otoño</td>
+        <td v-else>Primavera</td>
       </tr>
       <tr>
         <th>Profesor</th>
@@ -30,8 +31,8 @@
 
   <h5>Acciones</h5>
   <div class="btn-group">
-    <button @click="$emit('editGroup')" class="btn btn-outline-success">✏️</button>
-    <button @click="$emit('rmGroup')" class="btn btn-outline-danger">🗑️</button>
+    <button @click="$emit('editGroup')" class="btn btn-outline-success" title="Editar grupo">✏️</button>
+    <button @click="$emit('rmGroup')" class="btn btn-outline-danger"  title="Eliminar grupo">🗑️</button>
   </div>
 </template>
 

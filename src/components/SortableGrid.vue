@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <tr v-for="entry in filteredData" :key="entry.id" 
-        @click="$emit('selectOne', entry.id)">
+        @click="handleSelect(entry.id)">
 
         <td v-for="(col, index) in columns" :key="`${entry.id}_${col.key}`"
           class="text-start">
@@ -66,7 +66,15 @@
     columns: Array,    // [{key: colName, display:, type: String|Number|ObjectIds|Enum, } ...]
   })
   
-  defineEmits(['selectOne'])
+  const emit = defineEmits(['selectOne']);
+
+  function handleSelect(id) {
+  emit('selectOne', id);
+  const detailsSection = document.getElementById("div-details");
+  if (detailsSection) {
+    detailsSection.scrollIntoView({ behavior: "smooth" });
+  }
+}
 
   /**
    * Column objects:
@@ -148,6 +156,9 @@
 th.ghead {
   white-space: nowrap;
 }
+th, td { /* se añade espacio entre las columnas */
+  padding-left: 15px;
+}
 .arrow.asc::after {
   content: "↓";
   position: relative;
@@ -166,7 +177,6 @@ span.small {
 }
 table {
   margin-top: 10px;
-
 }
 thead>tr {
   border-bottom: 1px solid gray;
