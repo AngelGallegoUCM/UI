@@ -16,6 +16,12 @@
                 <th>Grupos a los que da clase</th>
                 <td v-if="user.groups.length">
                     {{ user.groups.map(g => formatNiceGroup(g)).join(' ') }}
+                    <span 
+            v-for="group in user.groups" 
+            :key="group"
+            class="badge bg-primary me-1">
+                {{ formatNiceGroup(group) }}
+        </span>
                 </td>
                 <td v-else>(ninguno)</td>
             </tr>
@@ -43,8 +49,8 @@
 import SortableGrid from './SortableGrid.vue';
 import TimeTable from './TimeTable.vue';
 
+import { computed, ref } from 'vue';
 import { gState, semesterNames, weekDayNames } from '../state.js';
-import { ref, computed } from 'vue';
 
 defineEmits([
   'filterUser',
