@@ -458,7 +458,6 @@ function rmGroup(id) {
   display: none;
 }
 
-
 .navbar {
   background-color: #faffbb;
   border-bottom: 2px solid black;
@@ -485,6 +484,10 @@ function rmGroup(id) {
     border-right: 2px solid black;
     border-bottom: 2px solid #faffbb;
   }
+  .fixed-button {
+    display: none;   /* Ocultar botones en pantallas más grandes */
+  }
+}
 }
 
 .details {
