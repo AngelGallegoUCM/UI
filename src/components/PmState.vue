@@ -1,5 +1,9 @@
 <template>
 
+  <!-- Modal de Confirmación -->
+  <ConfirmModal ref="confirmModalRef" title="Confirmar eliminación" message="¿Estás seguro de eliminar este elemento?" />
+
+
   <!-- Navbar principal -->
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
@@ -150,6 +154,8 @@
 </template>
 
 <script setup>
+
+import ConfirmModal from './ConfirmModal.vue'; // importamos el modal del delete
 import FilterOrAddBox from './FilterOrAddBox.vue';
 import SortableGrid from './SortableGrid.vue';
 import DetailsPane from './DetailsPane.vue';
@@ -161,6 +167,9 @@ import { ref, computed, onMounted, nextTick } from 'vue';
 import { gState, semesterNames } from '../state.js';
 import * as bootstrap from 'bootstrap'
 import * as U from '../util.js'
+
+// referencias para el modal de confirmación
+let confirmModalRef = ref(null);
 
 // tooltips html para elementos con data-bs-toggle="tooltip"]
 onMounted(() => {
@@ -317,11 +326,13 @@ async function editUser(id) {
 }
 
 function rmUser(id) {
-  gState.model.rmUser(id)
-  if (selected.value.id == id) {
-    selected.value = { id: -1 };
-  }
-  gState.key++
+  confirmModalRef.value.openModal(() => {
+    gState.model.rmUser(id);
+    if (selected.value.id == id) {
+      selected.value = { id: -1 };
+    }
+    gState.key++;
+  });
 }
 
 /////
@@ -346,13 +357,21 @@ async function editSubject(id) {
 }
 
 function rmSubject(id) {
-  if (selected.value.id == id) {
-    selected.value = { id: -1 };
-  }  
-  gState.model.rmSubject(id)
-  gState.key++
-}
+  // Verificar si hay grupos asociados
+  const subject = gState.resolve(id);
+  if (subject.groups.length > 0) {
+    alert("Debes eliminar todos los grupos antes de eliminar esta asignatura.");
+    return;
+  }
 
+  confirmModalRef.value.openModal(() => {
+    gState.model.rmSubject(id);
+    if (selected.value.id == id) {
+      selected.value = { id: -1 };
+    }
+    gState.key++;
+  });
+}
 
 /////
 // Grupos
@@ -377,11 +396,13 @@ async function editGroup(id) {
 }
 
 function rmGroup(id) {
-  gState.model.rmGroup(id)
-  if (selected.value.id == id) {
-    selected.value = { id: -1 };
-  }
-  gState.key++
+  confirmModalRef.value.openModal(() => {
+    gState.model.rmGroup(id);
+    if (selected.value.id == id) {
+      selected.value = { id: -1 };
+    }
+    gState.key++;
+  });
 }
 
 </script>

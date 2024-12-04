@@ -32,7 +32,14 @@
       <h5>Acciones</h5>
       <div class="btn-group">
         <button @click="$emit('editSubject')" class="btn btn-outline-success"  title="Editar asignatura">✏️</button>
-        <button @click="$emit('rmSubject')" class="btn btn-outline-danger"  title="Eliminar asignatura">🗑️</button>
+        <button 
+                @click="$emit('rmSubject')" 
+                class="btn btn-outline-danger"                
+                :title="subject.groups.length > 0 ? 'No puedes eliminar esta asignatura porque tiene grupos asociados' : 'Eliminar asignatura'"
+                 :disabled="subject.groups.length > 0"
+                >
+                🗑️
+        </button>
       </div>
   </template>
   
