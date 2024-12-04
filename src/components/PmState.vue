@@ -488,7 +488,6 @@ function rmGroup(id) {
     display: none;   /* Ocultar botones en pantallas más grandes */
   }
 }
-}
 
 .details {
   font-size: 150%;
