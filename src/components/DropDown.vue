@@ -5,7 +5,7 @@
         </div>
         <div class="col-auto">
             <select class="form-select" :name="id" :id="id" v-model="value">
-                <option value="FALL">1er Cuatrimestre</option>
+                <option value="FALL">1º Cuatrimestre</option>
                 <option value="SPRING">2º Cuatrimestre</option>
             </select>
         </div>

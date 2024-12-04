@@ -1,5 +1,9 @@
 <template>
 
+  <!-- Modal de Confirmación -->
+  <ConfirmModal ref="confirmModalRef" title="Confirmar eliminación" message="¿Estás seguro de eliminar este elemento?" />
+
+
   <!-- Navbar principal -->
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
@@ -8,6 +12,23 @@
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <!-- Botón para ir hacia abajo -->
+      <a
+        href="#div-details"
+        class="fixed-button bottom-right"
+        :class="{ hidden: isScrolledDown }"
+      >
+        ↘️
+      </a>
+      <!-- Botón para ir hacia arriba -->
+      <a
+       href="#top"
+       class="fixed-button bottom-right-up"
+        :class="{ hidden: !isScrolledDown }"
+      >
+        ⬆️
+      </a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -150,6 +171,8 @@
 </template>
 
 <script setup>
+
+import ConfirmModal from './ConfirmModal.vue'; // importamos el modal del delete
 import FilterOrAddBox from './FilterOrAddBox.vue';
 import SortableGrid from './SortableGrid.vue';
 import DetailsPane from './DetailsPane.vue';
@@ -161,6 +184,18 @@ import { ref, computed, onMounted, nextTick } from 'vue';
 import { gState, semesterNames } from '../state.js';
 import * as bootstrap from 'bootstrap'
 import * as U from '../util.js'
+
+const isScrolledDown = ref(false);
+
+// Manejar el evento de scroll
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    isScrolledDown.value = window.scrollY > 300;
+  });
+});
+
+// referencias para el modal de confirmación
+let confirmModalRef = ref(null);
 
 // tooltips html para elementos con data-bs-toggle="tooltip"]
 onMounted(() => {
@@ -317,11 +352,13 @@ async function editUser(id) {
 }
 
 function rmUser(id) {
-  gState.model.rmUser(id)
-  if (selected.value.id == id) {
-    selected.value = { id: -1 };
-  }
-  gState.key++
+  confirmModalRef.value.openModal(() => {
+    gState.model.rmUser(id);
+    if (selected.value.id == id) {
+      selected.value = { id: -1 };
+    }
+    gState.key++;
+  });
 }
 
 /////
@@ -346,13 +383,21 @@ async function editSubject(id) {
 }
 
 function rmSubject(id) {
-  if (selected.value.id == id) {
-    selected.value = { id: -1 };
-  }  
-  gState.model.rmSubject(id)
-  gState.key++
-}
+  // Verificar si hay grupos asociados
+  const subject = gState.resolve(id);
+  if (subject.groups.length > 0) {
+    alert("Debes eliminar todos los grupos antes de eliminar esta asignatura.");
+    return;
+  }
 
+  confirmModalRef.value.openModal(() => {
+    gState.model.rmSubject(id);
+    if (selected.value.id == id) {
+      selected.value = { id: -1 };
+    }
+    gState.key++;
+  });
+}
 
 /////
 // Grupos
@@ -377,16 +422,43 @@ async function editGroup(id) {
 }
 
 function rmGroup(id) {
-  gState.model.rmGroup(id)
-  if (selected.value.id == id) {
-    selected.value = { id: -1 };
-  }
-  gState.key++
+  confirmModalRef.value.openModal(() => {
+    gState.model.rmGroup(id);
+    if (selected.value.id == id) {
+      selected.value = { id: -1 };
+    }
+    gState.key++;
+  });
 }
 
 </script>
 
 <style>
+.fixed-button {
+  position: fixed;
+  font-size: 180%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.bottom-right-up {
+  bottom: 20px;
+  right: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+
 .navbar {
   background-color: #faffbb;
   border-bottom: 2px solid black;

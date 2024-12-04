@@ -29,7 +29,7 @@
         </tbody>
     </table>
 
-    <h3>Horario 1er Cuatrimestre</h3>
+    <h3>Horario 1º Cuatrimestre</h3>
     <SortableGrid :data="addSlotCols(FallSlots)" :columns="slotColumns" 
       :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
     <TimeTable :slots="FallSlots" />
