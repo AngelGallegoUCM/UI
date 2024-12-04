@@ -24,9 +24,9 @@
         en
         <input type="text" :id="`${id}-${slot.id}-location`" :name="`${id}-${slot.id}-location`" :value="slot.location"
           @input="setLocation(slot)" />
-        <button type="button" @click="rm(slot)">🗑️</button>
+        <button type="button" @click="rm(slot)" title = "Eliminar franja horaria">🗑️</button>
       </div>
-      <button type="button" @click="add">➕</button>
+      <button type="button" @click="add" title = "Añadir franja horaria">➕</button>
       <input type="hidden" :name="id" :id="id" :value="read">
     </div>
   </div>
