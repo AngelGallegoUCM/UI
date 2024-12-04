@@ -1,7 +1,3 @@
-<!--
-    Pensado para campo de formulario modal, permite gestionar horarios (slots)
-    para un grupo
--->
 <template>
   <div class="row g-1">
     <div class="col-3 text-end">
@@ -34,7 +30,6 @@
 
 <script setup>
 import { gState, weekDayNames } from '../state.js'
-
 import { ref, computed, onMounted } from 'vue'
 
 const props = defineProps({
@@ -53,25 +48,50 @@ onMounted(() => {
 
 function setDay(slot) {
   slot.weekDay = document.getElementById(`${props.id}-${slot.id}-day`).value
+  validateSlot(slot)
 }
 
 function setStart(slot) {
   slot.startTime = timeToHundreds(document.getElementById(`${props.id}-${slot.id}-start`).value)
+  validateSlot(slot)
 }
 
 function setEnd(slot) {
   slot.endTime = timeToHundreds(document.getElementById(`${props.id}-${slot.id}-end`).value)
+  validateSlot(slot)
 }
 
 function setLocation(slot) {
   slot.location = document.getElementById(`${props.id}-${slot.id}-location`).value
+  validateSlot(slot)
+}
+
+function validateSlot(slot) {
+  const conflict = current.value.some(s => 
+    s.id !== slot.id && 
+    s.weekDay === slot.weekDay &&
+    s.location === slot.location && 
+    (
+      (slot.startTime >= s.startTime && slot.startTime < s.endTime) ||
+      (slot.endTime > s.startTime && slot.endTime <= s.endTime) ||
+      (slot.startTime <= s.startTime && slot.endTime >= s.endTime)
+    )
+  )
+  if (conflict) {
+    alert('Conflicto de horario detectado. Por favor, elige otro horario o aula.')
+    return false
+  }
+  return true
 }
 
 function add() {
-  // negative ids to be able to create the slots later
-  current.value.push(new gState.model.Slot(
+  const newSlot = new gState.model.Slot(
     --lastId, Object.keys(gState.model.WeekDay)[0], 900, 1000,
-    "???", Object.keys(gState.model.WeekDay)[0], -1));
+    "???", Object.keys(gState.model.WeekDay)[0], -1)
+
+  if (validateSlot(newSlot)) {
+    current.value.push(newSlot)
+  }
 }
 
 function rm(slot) {

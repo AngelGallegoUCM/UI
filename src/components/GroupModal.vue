@@ -25,6 +25,7 @@
           <SlotBox 
             :start="group.slots"
             id="e-slots" label="Franja horaria" />
+            
         </div>
         <button type="submit" class="invisible">Submit</button>
       </form>
@@ -68,8 +69,14 @@ function setGroup() {
     if (!input) console.log("ERROR: no input for name", name, "in", form)
     return input
   }
-  const valueFor = (name) => inputFor(name).value
 
+  const inputForS = (name) => {
+    const input = form.querySelector(`select[name=${name}]`)
+    if (!input) console.log("ERROR: no input for name", name, "in", form)
+    return input
+  }
+  const valueFor = (name) => inputFor(name).value
+  const valueForS = (name) => inputForS(name).value
   console.log("saving group...", group, form)
 
   // inicializa campos dependientes de slots
@@ -112,11 +119,12 @@ function setGroup() {
   // todo válido: lanza evento a padre, y cierra modal
   emit(props.isAdd ? 'add' : 'edit', new gState.model.Group(group.id,
     valueFor("e-name"),
-    form.querySelector(`select[name=e-subjectId]`).value,
+    valueForS("e-subjectId") ? +valueForS("e-subjectId") : undefined,
     +valueFor("e-credits"),
     valueFor("e-isLab") === "true",
     slots.map(o => o.id),
-    valueFor("e-teacherId") ? +valueFor("e-teacherId") : undefined,
+    valueForS("e-teacherId") ? +valueForS("e-teacherId") : undefined,
+    
   ))
   modalRef.value.hide()
 }
