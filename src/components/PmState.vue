@@ -13,6 +13,23 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- Botón para ir hacia abajo -->
+      <a
+        href="#div-details"
+        class="fixed-button bottom-right"
+        :class="{ hidden: isScrolledDown }"
+      >
+        ↘️
+      </a>
+      <!-- Botón para ir hacia arriba -->
+      <a
+       href="#top"
+       class="fixed-button bottom-right-up"
+        :class="{ hidden: !isScrolledDown }"
+      >
+        ⬆️
+      </a>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -167,6 +184,15 @@ import { ref, computed, onMounted, nextTick } from 'vue';
 import { gState, semesterNames } from '../state.js';
 import * as bootstrap from 'bootstrap'
 import * as U from '../util.js'
+
+const isScrolledDown = ref(false);
+
+// Manejar el evento de scroll
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    isScrolledDown.value = window.scrollY > 300;
+  });
+});
 
 // referencias para el modal de confirmación
 let confirmModalRef = ref(null);
@@ -408,6 +434,31 @@ function rmGroup(id) {
 </script>
 
 <style>
+.fixed-button {
+  position: fixed;
+  font-size: 180%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.bottom-right-up {
+  bottom: 20px;
+  right: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+
 .navbar {
   background-color: #faffbb;
   border-bottom: 2px solid black;
