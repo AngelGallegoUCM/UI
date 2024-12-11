@@ -29,15 +29,31 @@
         </tbody>
     </table>
 
-    <h3>Horario 1º Cuatrimestre</h3>
-    <SortableGrid :data="addSlotCols(FallSlots)" :columns="slotColumns" 
-      :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
-    <TimeTable :slots="FallSlots" />
+    
+   <!-- Botón para alternar entre los cuatrimestres -->
+   <div class="mb-3">
+        <button 
+            class="btn btn-primary" 
+            @click="toggleSemester">
+            Mostrar Horario {{ isFallSemester ? '2º Cuatrimestre' : '1º Cuatrimestre' }}
+        </button>
+    </div>
 
-    <h3>Horario 2º Cuatrimestre</h3>
-    <SortableGrid :data="addSlotCols(SpringSlots)" :columns="slotColumns" 
-      :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
-    <TimeTable :slots="SpringSlots" />
+    <!-- Mostrar horario del primer cuatrimestre si el switch está activado -->
+    <div v-if="isFallSemester">
+        <h3>Horario 1º Cuatrimestre</h3>
+        <SortableGrid :data="addSlotCols(FallSlots)" :columns="slotColumns" 
+          :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
+        <TimeTable :slots="FallSlots" />
+    </div>
+
+    <!-- Mostrar horario del segundo cuatrimestre si el switch está desactivado -->
+    <div v-else>
+        <h3>Horario 2º Cuatrimestre</h3>
+        <SortableGrid :data="addSlotCols(SpringSlots)" :columns="slotColumns" 
+          :filter="{ all: '', fields: [] }" v-model:sorter="sorter" />
+        <TimeTable :slots="SpringSlots" />
+    </div>
 
     <h5>Acciones</h5>
     <div class="btn-group">
@@ -62,6 +78,9 @@ defineEmits([
 const props = defineProps({
     user: Object // see definition of User in ../model.js
 });
+
+// Definir la propiedad para controlar el switch de los cuatrimestres
+let isFallSemester = ref(true);  // Por defecto, mostramos el primer cuatrimestre
 
 let sorter = ref([{ key: "weekDay", order: 1 }]);
 
@@ -101,6 +120,11 @@ const slotColumns = [
     { key: 'niceEnd', display: 'Final', type: 'Time' },
     { key: 'location', display: 'Lugar', type: 'String' }
 ];
+
+// Función para alternar entre los cuatrimestres
+const toggleSemester = () => {
+    isFallSemester.value = !isFallSemester.value;
+};
 
 const addSlotCols = (ss) => {
     for (let s of ss) {
