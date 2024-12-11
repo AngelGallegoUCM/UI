@@ -36,7 +36,7 @@
                 @click="$emit('rmSubject')" 
                 class="btn btn-outline-danger"                
                 :title="subject.groups.length > 0 ? 'No puedes eliminar esta asignatura porque tiene grupos asociados' : 'Eliminar asignatura'"
-                 :disabled="subject.groups.length > 0"
+                
                 >
                 🗑️
         </button>
